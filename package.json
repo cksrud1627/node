@@ -1,0 +1,15 @@
+{
+  "name": "pcg",
+  "version": "1.0.0",
+  "description": "나의 이력서",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://github.com/cksrud1627/node.git)"
+  },
+  "author": "",
+  "license": "ISC"
+}
