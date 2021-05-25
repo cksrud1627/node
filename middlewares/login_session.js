@@ -1,3 +1,4 @@
+const { alert } = require("../lib/common");
 
 
 /**
@@ -12,7 +13,8 @@ module.exports.loginSession = (req,res,next) => {
 
   } else { // 로그인이 안된 경우 관리자 페이지 접근 차단
      if (req.url.indexOf("/admin") != -1) {
-       alert("접근 권한이 없습니다.", res , "/");
+
+       return alert("접근 권한이 없습니다.", res , "/");
 
      }
   }
