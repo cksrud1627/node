@@ -7,8 +7,144 @@
        <div class='tit'>인적사항</div>
        <div class='required_tit'>필수 입력 정보입니다.</div>
        <div class='inner'>
-
+          <div class='box box1'>
+            <div class='input_box'>
+              <div class='guide_tit'>이름</div>
+              <input type='text' name='name'>
+              </div>
+          </div>
+          <div class='input_box'>
+            <div class='guide_tit'>생년월일</div>
+            <input type='text' name='birthData'>
+            </div>
+            <div class='input_box'>
+              <div class='guide_tit'>전화번호</div>
+              <input type='text' name='landline'>
+              </div>
+              <div class='input_box'>
+                <div class='guide_tit'>휴대전화번호</div>
+                <input type='text' name='cellPhone'>
+                </div>
+          <div class='box box2'>
+            <div class='input_box gender'>
+              <div class='guide_tit'>성별</div>
+              <input type='text' name='gender'>
+              </div>
+              <div class='input_box email'>
+                <div class='guide_tit'>이메일</div>
+                <input type='email' name='email'>
+                </div>
+                <div class='input_box address'>
+                  <div class='guide_tit'>주소</div>
+                  <input type='text' name='address'>
+                  <i class='xi-search search_address'></i>
+                  </div>
+          </div>
+          <div class='box box3'>
+            <div class='photo_upload' onclick="layer.popup('/upload',450,450);">
+              <i class='si-plus-circle-o icon'></i>
+              <div class='t'>사진추가</div>
+              </div>
+          </div>
         </div>
         <!--//inner -->
       </section>
+      <!-- 학력 S -->
+     <section class='section form_section school_history'>
+        <div class='tit'>학력</div>
+        <div class='add_choice'>
+           <input type='checkbox' name='below_highschool' value='1' id='belowHighschool'>
+           <label for='belowHighschool'>고등학교 미만 졸업</label>
+          </div>
+          <div class='form_inner'>
+            <div class='form_html'>
+            <div class='add_form' data-type='학력'>
+             <i class='xi-plus-circle-o'></i>
+              추가
+            </div>
+          </div>
+       </section>
+      <!-- 학력 E-->
+      <section class='section job_history'>
+        <div class='tit'>경력</div>
+        <div class='form_inner'>
+           <div class='form_html'>
+             <div class='rows'>
+                 <div class='input_box input_box2'>
+                   <div class='guide_tit'>회사명</div>
+                   <input type='text' name='jhCompany'>
+                  <div>
+                    <div class='input_box input_box2'>
+                      <div class='guide_tit'>부서명</div>
+                      <input type='text' name='jhDept'>
+                    </div>
+                    <div class='input_box input_box2 first'>
+                      <div class='guide_tit'>입사년월</div>
+                     <input type='text' name='jhStartDate'>
+                    </div>
+                   <div class='input_box input_box2'>
+                     <div calss='guide_tit'>퇴사년월</div>
+                     <input type='text' name='jhEndDate'>
+                    </div>
+                    <div class='choice_box'>
+                      <input type='checkbox' name='jhInOffice' id='jhInOffice<%=no%>'>
+                      <label for='jhInOffice<%=no%>'>재직중</label>
+                    </div>
+                    <div class='input_box input_box2 first'>
+                      <div class='guide_tit'>직급 직책</div>
+                      <input type='text' name='jhPosition'>
+                </div>
+                  <div class='input_box input_box2'>
+                    <div class='guide_tit'>직무</div>
+                    <input type='text' name='jhTask'>
+                  </div>
+                  <div class='input_box input_box2 first'>
+                    <div class='guide_tit'>연봉</div>
+                    <input type='text' name='jhSalary'>
+                  </div>
+                  <div class='input_box jhWork wp100'>
+                    <div class='guide_tit'>담당업무</div>
+                    <<textarea name='jhWork' placeholder='담당하신 업무와 성과에 대해 간단명료하게 적어주세요.'></textarea>
+                    </div>
+               </div>
+               <!--// rows -->
+           </div>
+           <div class='add_form' data-type='경력'>
+              <i class='xi-plus-circle-o'></i>
+              추가
+              </div>
+            </div>
+      <!-- 경력 S -->
+
+
+      <!-- 경력 E -->
+
+   <!-- 희망 근무 조건 S -->
+      <section class='section work_condition'>
+        <div class='tit'>희망근무조건</div>
+        <div class='inner'>
+          <div class='input_box w386'>
+            <div calss='guide_tit'>고용형태</div>
+            <input type='text' name='workType'>
+           </div>
+           <div class='input_box'>
+             <div class='guide_tit'>희망연봉</div>
+             <input type='text' name='salary'>
+             </div>
+             <div class='choice_box'>
+                <input type='checkbox' name='negotiableSalary' value='1' id='negotiableSalary'>
+                <label for='negotiableSalary'>면접 후 결정</label>
+               </div>
+             <div class='input_box wp100'>
+               <div class='guide_tit'>희망근무지</div>
+               <input type='text' name='workLocation'>
+               </div>
+            <div class='input_box wp100'>
+              <div class='guide_tit'>직무산업키워드</div>
+              <input type='text' name='workKeyword'>
+              </div>
+          </div>
+          <!--//inner -->
+        </section>
+      <!-- 희망 근무 조건 E -->
 </form>
