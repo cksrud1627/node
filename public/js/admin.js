@@ -197,4 +197,11 @@ $(function() {
 	$(".floating_box input[type='checkbox']").click(function() {
 		updateSelectedMenu();
 	});
+
+	/** 이력서 저장하기 처리 */
+	$(".floating_box .save").click(function() {
+		if (confirm('정말 저장하시겠습니까?')) {
+		 frmProfile.submit();
+	 }
+	});
 });
