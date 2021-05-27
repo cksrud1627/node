@@ -13,7 +13,7 @@ function updateBenefit()
 		 if (benefit == '장애') {
 			 isAdditionalSelect = true;
 			 $(".additional_select .handicap").removeClass("dn");
-		 } else of(benefit == '병역') {
+		 } else if(benefit == '병역') {
 			 isAdditionalSelect = true;
 			 $(".additional_select .military").removeClass("dn");
 		 }
