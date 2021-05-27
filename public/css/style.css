@@ -59,12 +59,25 @@ input[type='email'] { border: 1px solid #d5d5d5; padding: 0 10px; height: 40px; 
 .admin_page .container .profile { display: table-cell; vertical-align: top; }
 
 /** admin/_nav.html */
-.admin_page .floating_box { width: 240px; position: absolute; right: 0; }
+.admin_page .floating_box { width: 240px; margin-left: 20px;}
+.admin_page .floating_box.fixed { position: fixed; }
 .admin_page .selection_box {  background-color: #ffffff; padding: 15px; margin-bottom: 10px; border: 1px solid #eeeeee; }
-.admin_page .selection_box .tit { font-size: 14px; color: #999999; border-bottom: 1px solid #eeeeee; padding-bottom: 13px; }
+.admin_page .selection_box .tit { font-size: 14px; color: #999999; border-bottom: 1px solid #eeeeee; padding-bottom: 13px; margin-bottom: 10px;}
 
 .admin_page .floating_box .btns .btns { display: block; height: 50px; text-align: center; line-height: 50px; background-color: #ffffff; color: #333333; font-size: 15px; cursor: pointer; }
 .admin_page .floating_box .btns.save { background-color: #3399ff; color: #ffffff; }
+
+.admin_page .floating_box input[type='checkbox'] { display: none;}
+.admin_page .floating_box input[type='checkbox']+label { font-size: 14px; color: #666666; cursor: pointer; padding: 7px 0; display: block; position: relative;}
+
+.admin_page .floating_box input[type='checkbox']+label i{ font-size: 25px; color: #666666; position: absolute; right: 0;}
+.admin_page .floating_box input[type='checkbox']+label .plus { display: inline;}
+.admin_page .floating_box input[type='checkbox']+label .minus { display: none;}
+
+.admin_page .floating_box input[type='checkbox']:checked+label { color: #3399ff;}
+.admin_page .floating_box input[type='checkbox']:checked+label i { color: #3399ff;}
+.admin_page .floating_box input[type='checkbox']:checked+label .plus { display: none;}
+.admin_page .floating_box input[type='checkbox']:checked+label .minus { display: inline;}
 
 /** admin/_profile.html */
 .admin_page .profile .resume_title { margin-bottom: 20px; }
