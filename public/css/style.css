@@ -28,6 +28,9 @@ input[type='email'] { border: 1px solid #d5d5d5; padding: 0 10px; height: 40px; 
 /** 여백 */
 .mr10 { margin-right: 10px !important;}
 
+/** 안보임 처리 */
+.dn { display: none !important;}
+
 /** 버튼 */
 .btn1 { background-color: #06224f; height: 40px; width: 100%; display: block; border: 0; color: #ffffff; font-size: 17px; cursor: pointer; border-radius: 7px; }
 .btn1:hover { background-color: #010e24; }
@@ -140,3 +143,13 @@ input[type='email'] { border: 1px solid #d5d5d5; padding: 0 10px; height: 40px; 
 .admin_page .benefit .inner2 { background-color: #ffffff; padding: 20px; border: 1px solid #dbe0e9;}
 .admin_page .benefit .sel {float: left; margin-right: 10px; width: 168px;}
 .admin_page .benefit .inner2:after {clear:left; content:''; display: block;}
+
+.admin_page .benefit .additional_select { background-color: #f5f7fa; padding: 20px; border-bottom: 1px solid #dbe0e9; border-top: 0;}
+.admin_page .benefit dt { width: 71px; color: #666666; font-size: 14px; padding: 0;}
+.admin_page .benefit dd { padding: 0;}
+.admin_page .benefit dl.handicap { margin-bottom: 10px;}
+.admin_page .benefit .additional_select select { border: 1px solid #dddddd; width: 180px; height: 62px; background-color:#ffffff; }
+
+/** 자기 소개 */
+.admin_page .introduction input[type='text'] { width: 100%; height: 60px; padding: 0 15px; border: 1px solid #dddddd; border-radius: 0; font-size: 16px; color: #333333;}
+.admin_page .introduction textarea { height: 265px; padding: 15px; font-size: 16px; color: #333333; border: 1px solid #dddddd; border-top: 0; width: 100%;  resize: none; outline: none;}
