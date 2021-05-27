@@ -139,9 +139,130 @@ const resume = {
        sql = 'TRUNCATE intern';
        await sequelize.query(sql, {type : QueryTypes.DELETE});
        if (params.items && params.items.indexOf('인턴') != -1) {
+          if (!(params.internType instanceof Array)) {
+            params.internType = [params.internType];
+            params.internCompany = [params.internCompany];
+            params.internStartDate = [params.internStartDate];
+            params.internEndDate = [params.internEndDate];
+            params.internDesc = [params.internDesc];
+          }
 
-       }
+
+       params.internType.forEach(async(type,index) => {
+         const sql = `INSERT INTO intern (type,company,startDate,endDate,description)
+                              VALUES (:type,:company,:startDate,:endDate,:description)`;
+
+            const replacements = {
+              type : type,
+              company : params.internCompany[idx],
+              startDate : params.internStartDate[idx],
+              endDate : params.internEndDate[idx],
+              description : params.internDesc[idx],
+            };
+
+            await sequelize.query(sql, {
+              replacements,
+              type : QueryTypes.INSERT,
+            });
+       });
+     }
       //intern 인턴 및 대외활동 처리 E
+
+      // education 교육이수 처리  S
+      sql = 'TRUNCATE education';
+      await sequelize.query(sql, {type : QueryTypes.DELETE});
+     if (params.items && params.items.indexOf('교육이수') != -1) {
+       if (!(params.eduName instanceof Array)) {
+         params.eduName = [params.eduName];
+         params.eduCompany = [params.eduCompany];
+         params.eduStartDate = [params.eduStartDate];
+         params.eduEndDate = [params.eduEndDate];
+         params.eduDesc = [params.eduDesc];
+       }
+
+       params.eduName.forEach(async(name,index) => {
+          const sql = `INSERT INTO education (name, company, startDate, endDate, description)
+                             VALUES (:name, :company, :startDate, :endDate, :description)`;
+
+          const replacements = {
+            name : name,
+            company : params.eduCompany[index],
+            startDate : params.eduStartDate[index],
+            endDate : params.eduEndDate[index],
+            description :params.eduDesc[index],
+          };
+
+          await sequelize.query(sql, {
+            replacements,
+            type : QueryTypes.INSERT,
+          });
+       });
+     }
+      // education 교육 이수 처리 E
+
+      // license 자격증 처리 S
+      sql = 'TRUNCATE license';
+      await sequelize.query(sql, { type : QueryTypes.DELETE});
+      if (params.items && params.items.indexOf('자격증') != -1) {
+        if (!(params.licenseName instanceof Array)) {
+          params.licenseName = [params.licenseName];
+          params.licenselssue = [params.licenselssue];
+          params.licenseDate = [params.licenseDate];
+        }
+
+        params.licenseName.forEach(async(name,index) => {
+           const sql =`INSERT INTO license (name,issue,date)
+                                  VALUES (:name,:issue,:date)`;
+
+          const replacements = {
+            name : name,
+            issue : params.licenselssue[index],
+            date : params.licenseDate[index],
+          };
+
+          await sequelize.query(sql, {
+            replacements,
+            type : QueryTypes.INSERT,
+          });
+        });
+      }
+      // license 자격증 처리 E
+
+      // award 수상 내역 처리 S
+      sql = 'TRUNCATE award';
+      await sequelize.query(sql, { type : QueryTypes.DELETE });
+     if(params.items && params.items.indexOf('수상') != -1) {
+       if(!(params.awardName instanceof Array)) {
+         params.awardName = [params.awardName];
+         params.awardCompany = [params.awardCompany];
+         params.awardYear = [params.awardYear];
+         params.awardDesc = [params.awardDesc];
+       }
+
+       params.awardName.forEach(async(name, index) => {
+         const sql = `INSERT INTO award (name,company,year,description)
+                           VALUES (:name,:company,:year,:description)`;
+
+        const replacements = {
+          name : name,
+          company : params.awardCompany[index],
+          year : params.awardYear[index],
+          description : params.awardDesc[index],
+        };
+
+        await sequelize.query(sql, {
+          replacements,
+          type : QueryTypes.INSERT,
+        });
+       });
+     }
+      // award 수상 내역 처리 E
+
+      // overseas 해외경험 처리 S
+      if (params.items && params.items.indexOf('해외경험') != -1) {
+
+      }
+      // overseas 해외경험 처리 E
 
     return true;
     } catch (err) {
