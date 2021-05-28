@@ -49,6 +49,23 @@ function getResume()
 						}
 					}
 				}
+				// basicInfo select 부분 처리
+				if (res.basicinfo.handicapLevel) {
+					$("select[name='handicapLevel']").val(res.basicinfo.handicapLevel).change();
+				}
+
+				if (res.basicinfo.military) {
+					$("select[name='military']").val(res.basicinfo.military).change();
+
+					$t = $(".military .add_info");
+					if (res.basicinfo.military == '군필') {
+						$t.removeClass("dn");
+					} else {
+						$t.removeClass("dn").addClass("dn");
+					}
+				}
+
+
 			} // endif
 			/* basicinfo */
 
@@ -98,7 +115,7 @@ function getResume()
 
 			/** 이미지 처리 */
 			if (res.profile) {
-				$(".photo_upload").html(`<img src='${res.profile}'>`);
+				$(".photo_upload").html( `<img src='${res.profile}'>`);
 				$(".photo_upload").parent().append("<i class='xi-close photo_remove'></i>");
 			}
 
@@ -152,24 +169,19 @@ function addForm(type, target, list)
 	if (template) {
 		let html = $("#template_" + template).html();
 
-		if (target.length > 0) {
-			const no = new Date().getTime();
-			html = html.replace(/<%=no%>/g, no);
-		}
-
 		if (list) { // 데이터가 있으면 갯수만큼 추가
 			if (list.length > 0) {
 				$("section." + template).removeClass("dn");
 				$(".floating_box ." + template).prop("checked", true);
 			}
 
-
 			list.forEach((data) => {
 				// 데이터를 완성 처리
 				let html2 = html;
 				html2 = html2.replace(/<%=no%>/g, new Date().getTime());
+
 				$tplHtml = $(html2);
-				const selector = ["input[type='text']", "textarea", "select"];
+				const selector = ["input[type='text']", "textarea", "select", "input[type='hidden']", "input[type='checkbox']"];
 				selector.forEach((selector) => {
 					$texts = $tplHtml.find(selector);
 					$.each($texts, function() {
@@ -182,29 +194,38 @@ function addForm(type, target, list)
 								// 일치하는 name이 있는 경우
 								$(this).val(data[key]);
 
-								if (selector == 'select') {
-
-									$(this).change();
-									$school1 = $(this).closest(".rows").find(".status, .major, .score, .scoreTotal");
-									$school2 = $(this).closest(".rows").find(".schoolTransferTxt");
-									if (data[key].type == '고등학교') {
-										$school1.addClass("dn");
-										$school2.text("대입검정고시");
-									} else {
-									$school1.removeClass("dn");
-                  $schoo2.text("편입");
+								switch(selector) {
+									case "select" :
+										// 일치하는 name이 있는 경우
+										$(this).val(data[key]).change();
+										$school1 = $(this).closest(".rows").find(".status, .major, .score, .scoreTotal");
+										$school2 = $(this).closest(".rows").find(".schoolTransferTxt");
+										if (data.type == '고등학교') {
+											$school1.addClass("dn");
+											$school2.text("대입검정고시");
+										} else {
+											$school1.removeClass("dn");
+											$school2.text("편입");
+										}
+										break;
+									case "input[type='checkbox']" :  // checkbox
+										$(this).prop("checked", data[key]);
+										break;
+									default :
+										// 일치하는 name이 있는 경우
+										$(this).val(data[key]);
 								}
-							}
 								break;
 							}
 						}
 					});
 				});
 
+
 				target.append($tplHtml);
 			});
 		} else { // DB 에 데이터 없는 경우는 1개만 추가
-		html = html.replace(/<%=no%>/g, new Date().getTime());
+			html = html.replace(/<%=no%>/g, new Date().getTime());
 			target.append(html);
 		}
 	}
@@ -372,53 +393,63 @@ $(function() {
 	});
 
 	/** 이력서 이미지 삭제 */
-	$("body").on("click",".photo_remove", function() {
-     if (!confirm('정말 삭제하시겠습니까?')) {
-			 return;
-		 }
+	$("body").on("click", ".photo_remove", function() {
+		if (!confirm('정말 삭제하시겠습니까?')) {
+			return;
+		}
 
-		 $.ajax({
-			 url : "/admin/remove_photo",
-			 type : "get",
-			 dataType : "text",
-			 success : function (res) {
-				 if (res.trim() == "1") { // 삭제 성공
-					 const tag = `<i class='xi-plus-circle-o icon'></i>
+		$.ajax({
+			url : "/admin/remove_photo",
+			type : "get",
+			dataType : "text",
+			success : function (res) {
+				if (res.trim() == "1") { // 삭제 성공
+					const tag = `<i class='xi-plus-circle-o icon'></i>
 									<div class='t'>사진추가</div>`;
-					 $(".photo_upload").html(tag);
-					 $(".photo_remove").remove();
-
-				 } else {// 삭제 실패
-             alert("이미지 삭제 실패!");
-				 }
-			 },
-			 error : function (err) {
-				 console.error(err);
-			 }
-		 });
+					$(".photo_upload").html(tag);
+					$(".photo_remove").remove();
+				} else { // 삭제 실패
+					alert("이미지 삭제 실패");
+				}
+			},
+			error : function (err) {
+				console.error(err);
+			}
+		});
 	});
 
 	/** 학력에서 학교 구분 선택 처리 */
-	$("body").on("change","select[name='schoolType']", function() {
+	$("body").on("change", "select[name='schoolType']", function() {
 		$section = $(this).closest(".rows");
 		$target = $section.find(".status, .major, .score, .scoreTotal");
-		 if($(this).val() == '고등학교' || $(this).val() == "") {
-        $target.addClass("dn");
-				$section.find(".schoolTransferTxt").text("대입검정고시");
-		 } else { // 고등학교 외
-			 $target.removeClass("dn");
-			 $section.find(".schoolTransferTxt").text("편입");
-		 }
+		if ($(this).val() == '고등학교' || $(this).val() == "") {
+			$target.addClass("dn");
+			$section.find(".schoolTransferTxt").text("대입검정고시");
+		} else { // 고등학교 외
+			$target.removeClass("dn");
+			$section.find(".schoolTransferTxt").text("편입");
+		}
 	});
+
 	/** 학력 - 편입, 대입검정고시 클릭시 처리 */
-	$("body").on("click",".schoolTransfer",function() {
+	$("body").on("click", ".schoolTransfer", function() {
 		const v = $(this).prop("checked")?1:0;
 		$(this).parent().find("input[name='schoolTransfer']").val(v);
 	});
 
 	/** 경력 - 재직중 클릭시 처리 */
-	$("body").on("click",".jhInOffice", function() {
-	const v = $(this).prop("checked")?1:0;
-	$(this).parent().find("input[name='jhInOffice']").val(v);
-});
+	$("body").on("click", ".jhInOffice", function() {
+		const v = $(this).prop("checked")?1:0;
+		$(this).parent().find("input[name='jhInOffice']").val(v);
+	});
+
+	/** 병역 - 군필 선택 추가 정보 처리 */
+	$("body").on("click", ".benefit select[name='military']", function() {
+		$target = $(this).siblings(".add_info");
+		if ($(this).val() == '군필') {
+			$target.removeClass("dn");
+		} else {
+			$target.removeClass("dn").addClass("dn");
+		}
+	});
 });
