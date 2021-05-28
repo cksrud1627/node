@@ -166,7 +166,9 @@ function addForm(type, target, list)
 
 			list.forEach((data) => {
 				// 데이터를 완성 처리
-				$tplHtml = $(html);
+				let html2 = html;
+				html2 = html2.replace(/<%=no%>/g, new Date().getTime());
+				$tplHtml = $(html2);
 				const selector = ["input[type='text']", "textarea", "select"];
 				selector.forEach((selector) => {
 					$texts = $tplHtml.find(selector);
@@ -181,8 +183,18 @@ function addForm(type, target, list)
 								$(this).val(data[key]);
 
 								if (selector == 'select') {
+
 									$(this).change();
+									$school1 = $(this).closest(".rows").find(".status, .major, .score, .scoreTotal");
+									$school2 = $(this).closest(".rows").find(".schoolTransferTxt");
+									if (data[key].type == '고등학교') {
+										$school1.addClass("dn");
+										$school2.text("대입검정고시");
+									} else {
+									$school1.removeClass("dn");
+                  $schoo2.text("편입");
 								}
+							}
 								break;
 							}
 						}
@@ -192,6 +204,7 @@ function addForm(type, target, list)
 				target.append($tplHtml);
 			});
 		} else { // DB 에 데이터 없는 경우는 1개만 추가
+		html = html.replace(/<%=no%>/g, new Date().getTime());
 			target.append(html);
 		}
 	}
@@ -367,11 +380,11 @@ $(function() {
 		 $.ajax({
 			 url : "/admin/remove_photo",
 			 type : "get",
-			 dataType : "html",
+			 dataType : "text",
 			 success : function (res) {
-				 if (res == "1") { // 삭제 성공
-					 const tag `<i class='xi-plus-circle-o icon'></i>
-					 <div class='t'>사진추가</div>`;
+				 if (res.trim() == "1") { // 삭제 성공
+					 const tag = `<i class='xi-plus-circle-o icon'></i>
+									<div class='t'>사진추가</div>`;
 					 $(".photo_upload").html(tag);
 					 $(".photo_remove").remove();
 
@@ -384,4 +397,28 @@ $(function() {
 			 }
 		 });
 	});
+
+	/** 학력에서 학교 구분 선택 처리 */
+	$("body").on("change","select[name='schoolType']", function() {
+		$section = $(this).closest(".rows");
+		$target = $section.find(".status, .major, .score, .scoreTotal");
+		 if($(this).val() == '고등학교' || $(this).val() == "") {
+        $target.addClass("dn");
+				$section.find(".schoolTransferTxt").text("대입검정고시");
+		 } else { // 고등학교 외
+			 $target.removeClass("dn");
+			 $section.find(".schoolTransferTxt").text("편입");
+		 }
+	});
+	/** 학력 - 편입, 대입검정고시 클릭시 처리 */
+	$("body").on("click",".schoolTransfer",function() {
+		const v = $(this).prop("checked")?1:0;
+		$(this).parent().find("input[name='schoolTransfer']").val(v);
+	});
+
+	/** 경력 - 재직중 클릭시 처리 */
+	$("body").on("click",".jhInOffice", function() {
+	const v = $(this).prop("checked")?1:0;
+	$(this).parent().find("input[name='jhInOffice']").val(v);
+});
 });
