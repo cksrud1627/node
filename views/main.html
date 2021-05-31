@@ -79,5 +79,103 @@
 </div>
 <!-- // row2 -->
 </div>
+<div class='sub_title'>학력</div>
+<div class='info_box info_box2 school'>
+ {% for item in school %}
+ <div class='rows'>
+   <div class='box box1'>
+     <div class='tt1'>
+     {{ item.startDate }}
+     {% if item.endDate %} ~ {{ item.endDate }} {% endif %}
+     </div>
+     {% if item.status %}
+      <div class='tt2'>{{ item.status }}</div>
+     {% endif %}
+   </div>
+   <div class='box box2'>
+    <div class='r1'>
+      <span class='tt3'>{{ item.name }}</span>
+      {% if item.type !='고등학교' %}
+       <span class='tt4'>{{ item.major }}</span>
+      {% endif %}
+    </div>
+    {% if item.type !='고등학교' %}
+    <div class='r2'>
+      <span class='tt4 score_tit'>학점</span>
+      <span class='tt5 score'>{{ item.score }} / </span>
+      <span class='tt5'>{{ item.gradeTotal }}</span>
+    </div>
+    {% endif %}
+  </div>
+ </div>
+{% endfor %}
+</div>
+
+{% if jobhistory %}
+ <div class='sub_tit'>경력</div>
+   <div class='info_box info_box2 jobhistory'>
+   {% for item in jobhistory %}
+   <div class='rows'>
+     <div class='box box1'>
+      <div class='tt1'>
+        {{ item.startDate }}
+        {% if item.endDate %} ~ {{ item.endDate }} {% endif %}
+        </div>
+        {% if item.period %}
+      <div class='tt2'>{{ item.period }}</div>
+      {% endif %}
+    </div>
+    <div class='box box2'>
+       <div class='r1'>
+         <span class='tt3'>{{ item.company }}</span>
+         <span class='tt4'>{{ item.position }} {% if item.task %} {{ item.task }}{% endif %}</span>
+        </div>
+    </div>
+  </div>
+  <!-- //rows -->
+  {% endfor %}
+ </div>
+{% endif %}
+ {% if intern %}
+<div class='sub_title'>인턴 대외활동</div>
+<div class='info_box info_box2 intern'>
+  {% for item in intern %}
+  <div class='rows'>
+    <div class='box box1'>
+      <div class='tt1'>
+        {{ item.startDate }}
+        {% if item.endDate %} ~ {{ item.endDate }} {% endif %}
+        </div>
+        {% if item.period %}
+      <div class='tt2'>{{ item.period }}</div>
+      {% endif %}
+    </div>
+    <div class='box box2'>
+      <div class='r1'>
+        <span class='tt3'>{{ item.company }}</span>
+        <span class='tt4'>{{ item.type }}</span>
+      </div>
+       {% if item.description2 %}
+       <div class='tt5'>
+          {{ item.description2}}
+        </div>
+        {% endif %}
+    </div>
+  </div>
+  <!-- // rows -->
+  {% endfor %}
+</div>
+<!--// info_box -->
+{% endif %}
+
+{% if license %}
+ <div class='sub_title'>자격증</div>
+ <div class='info_box info_box license'>
+
+ </div>   
+{% endif %}
+
+
+</div>
 <!-- // container-->
 {% endblock %}
