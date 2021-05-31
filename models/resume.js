@@ -442,7 +442,7 @@ const resume = {
 						age = year - Number(birthDate[0]) + 1;
 						birthYear = birthDate[0];
 					}
-					
+
           data[table].birthYear = birthYear;
 					data[table].age = age;
 
