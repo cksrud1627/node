@@ -3,6 +3,12 @@ const fs = require('fs').promises;
 const contants = require('fs').constants;
 const path = require('path');
 
+String.prototype.nl2br = function() {
+	const newText = this.replace(/\\r\\n/g, "<br>");
+
+	return newText;
+};
+
 /**
 * 이력서 Model
 *
@@ -438,15 +444,40 @@ const resume = {
 					if (data[table].birthDate) {
 						const birthDate = data[table].birthDate.split(".");
 
-            const year = Number(new Date().getFullYear());
+						const year = Number(new Date().getFullYear());
 						age = year - Number(birthDate[0]) + 1;
 						birthYear = birthDate[0];
 					}
 
-          data[table].birthYear = birthYear;
+					data[table].birthYear = birthYear;
 					data[table].age = age;
 
+					// 취업우대사항 항목 포함 여부
+					const benefit = data[table].benefit;
+					data[table].benefit1 = (benefit.indexOf('보훈대상') != -1)?true:false;
+          data[table].benefit2 = (benefit.indexOf('취업보호 대상') != -1)?true:false;
+					data[table].benefit3 = (benefit.indexOf('고용지원금 대상') != -1)?true:false;
+					data[table].benefit4 = (benefit.indesOf('장애') != -1)?true:false;
+					data[table].benefit5 = (benefit.indexOf('병역') != -1)?true:false;
+
 				} else { // 나머지는 레코드 여러개
+					rows.forEach((v,i,_rows) => {
+						// description 컬럼 체크
+						if ('description' in v) {
+							_rows[i].description2 = v.description.nl2br();
+						}
+
+						if ('introduction' in v) {
+							_rows[i].introduction2 = v.introduction.nl2br();
+						}
+
+						if (table == 'jobhistory' && 'work' in v) {
+							_rows[i].work2 = v.work.nl2br();
+						}
+
+
+					});
+
 					data[table] = rows;
 				}
 			}
