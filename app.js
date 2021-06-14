@@ -18,7 +18,7 @@ const indexRouter = require('./routes'); // index.js -> 생략가능
 dotenv.config();
 
 const app = express();
-app.set('port',process.env.PORT || 3000);
+app.set('port',process.env.PORT || 3002);
 app.set("view engine", "html");
 
 nunjucks.configure("views",{
