@@ -9,14 +9,12 @@ const router = express.Router();
 /**
 * 이력서 관리 페이지
 */
-
 router.get("/", (req,res,next) => {
    const params = {
      addClass : 'admin_page',
    };
   return res.render("admin/main",params);
 });
-
 
 router.route("/profile")
     /** 저장된 이력서 데이터 */
@@ -30,8 +28,6 @@ router.route("/profile")
   if (!result) {
     return alert("이력서 저장에 실패하였습니다.", res);
   }
-
-
 
   return reload(res,"parent");
 });
